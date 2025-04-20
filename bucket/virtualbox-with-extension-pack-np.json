@@ -1,6 +1,6 @@
 {
     "version": "7.1.8",
-    "description": "Powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as home use.",
+    "description": "Powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as home use. Includes and installs proper VirtualBox Extension Pack alongside.",
     "homepage": "https://www.virtualbox.org/",
     "license": {
         "identifier": "GPL-2.0-only|Freeware",
@@ -9,7 +9,8 @@
     "notes": [
         "The VirtualBox Extension Pack is only free for personal, educational or evaluation use.",
         "A license must be purchased for enterprise use.",
-        "For more information, go here: https://www.virtualbox.org/wiki/Licensing_FAQ"
+        "For more information, go here: https://www.virtualbox.org/wiki/Licensing_FAQ",
+        "By installing this manifest, you agree to the aforementioned license. It has been displayed to you during installation of the extension pack."
     ],
     "architecture": {
         "64bit": {
@@ -45,6 +46,15 @@
             "Start-Process msiexec.exe -ArgumentList \"/x\", \"$id\", \"/quiet\", \"/norestart\" -Wait -NoNewWindow"
         ]
     },
+    "post_install": [
+        "Write-Host \"Installing extension pack...\"",
+        "echo y | VBoxManage extpack install --replace \"$dir\\Oracle_VirtualBox_Extension_Pack-$version.vbox-extpack\"",
+        "if ($LASTEXITCODE -eq 0) {",
+        "   Write-Host \"Successfully installed extension pack $version.\"",
+        "} else {",
+        "   Write-Host \"Failed to install extension pack. Error code: $LASTEXITCODE.\"",
+        "}"
+    ],
     "bin": [
         "VBoxAudioTest.exe",
         "VBoxAutostartSvc.exe",
