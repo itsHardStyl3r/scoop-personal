@@ -38,15 +38,19 @@
     "uninstaller": {
         "script": [
             "if (!(is_admin)) { error \"$app requires admin rights to $cmd\"; break }",
-            "$id_array = wmic product where \"name like 'Oracle VM VirtualBox%'\" get IdentifyingNumber",
-            "if (!($id_array[2] -match '({[0-9A-F-]+})')) { error 'Could not find product ID'; break }",
-            "$id = $matches[1]",
-            "Invoke-ExternalCommand msiexec -ArgumentList @('/x', \"$id\", '/qn', '/norestart') -RunAs | Out-Null"
+            "$id_array = Get-WmiObject -Query \"SELECT IdentifyingNumber FROM Win32_Product WHERE Name LIKE 'Oracle VirtualBox%'\"",
+            "if (-not $id_array) { Write-Error 'Could not find product ID'; break }",
+            "$id = $id_array.IdentifyingNumber",
+            "if (-not ($id -match '({[0-9A-F-]+})')) { Write-Error 'Could not find valid product ID'; break }",
+            "Start-Process msiexec.exe -ArgumentList \"/x\", \"$id\", \"/quiet\", \"/norestart\" -Wait -NoNewWindow"
         ]
     },
     "bin": [
+        "VBoxAudioTest.exe",
+        "VBoxAutostartSvc.exe",
         "VBoxBalloonCtrl.exe",
         "VBoxBugReport.exe",
+        "VBoxDrvInst.exe",
         "VBoxDTrace.exe",
         "VBoxExtPackHelperApp.exe",
         "VBoxHeadless.exe",
@@ -56,7 +60,6 @@
         "VBoxNetNAT.exe",
         "VBoxSDS.exe",
         "VBoxSVC.exe",
-        "VBoxTestOGL.exe",
         "VBoxWebSrv.exe",
         "VirtualBox.exe",
         "VirtualBoxVM.exe"
