@@ -24,7 +24,7 @@
     },
     "checkver": {
         "url": "https://www.zerotier.com/download/",
-        "regex": "(?s)Latest version\\: <a.*?>([\\d.]+)</a>"
+        "regex": "Latest Version \\| ([\\d.]+)"
     },
     "autoupdate": {
         "url": "https://download.zerotier.com/RELEASES/$version/dist/ZeroTierOne.msi#/setup.msi_"
