@@ -1,0 +1,9 @@
+{
+    "version": "v1.3",
+    "description": "Stops Adobe's pesky background apps 😉",
+    "homepage": "https://github.com/t4rra/CCStopper",
+    "license": "GPL-3.0-only",
+    "url": "https://github.com/t4rra/CCStopper/releases/download/v1.3/CCStopper.ps1",
+    "hash": "2aa5db6c6da030d90252b49ce71774507b4ca1d1760eb9ceebde2231628171c4",
+    "bin": "CCStopper.ps1"
+}
